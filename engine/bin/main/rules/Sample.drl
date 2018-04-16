@@ -1,0 +1,15 @@
+package com.kobie.engine.processing
+
+import com.kobie.engine.domain.value.AccountDTO;
+import com.kobie.engine.domain.value.TransactionDTO;
+import com.kobie.engine.dto.ProcessResponse;
+
+rule "Club Justice Purchase"
+    when
+    	acct : AccountDTO( canEarn == true, portfolioId == 35 )  
+    	tran : TransactionDTO (type in ("SALE", "RETURN"), category in ("INSTORE", "ONLINE"))
+    	resp : ProcessResponse()
+    then
+    	System.out.println("The account can earn and portfolio ID is " + acct.getPortfolioId());
+    	resp.setWasSuccessful(true);
+end
